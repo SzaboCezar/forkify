@@ -28,8 +28,6 @@ const renderSpinner = function (parentEl) {
   parentEl.insertAdjacentHTML("afterbegin", html)
 }
 
-
-
 // Render recipe
 const renderRecipe = function (recipe) {
   const html = `
@@ -123,14 +121,18 @@ const renderRecipe = function (recipe) {
   recipeContainer.insertAdjacentHTML('afterbegin', html);
 }
 
-const searchRecipe = async function () {
+const showRecipe = async function () {
   try {
+    const id = window.location.hash.slice(1);
+    console.log(id);
+    if (!id) return;
     renderSpinner(recipeContainer);
-    const response = await fetch('https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886');
+    const response = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
+
     const data = await response.json();
     if (!response.ok) throw new Error(`${response.statusText} (${response.status})`)
     let { recipe } = data.data;
-    console.log(recipe);
+    // console.log(recipe);
     recipe = {
       id: recipe.id,
       title: recipe.title,
@@ -142,11 +144,18 @@ const searchRecipe = async function () {
       sourceURL: recipe.source_url
     }
     renderRecipe(recipe)
-    console.log(recipe);
+    // console.log(recipe);
   } catch (error) {
     console.log(error);
   }
 
 }
 
-searchRecipe();
+const events = ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, showRecipe));
+// showRecipe();
+
+
+const arr = [1, 2, 3, 4, 5, 6, 7];
+console.log(arr);
+
+for (n of arr) console.log(n);
