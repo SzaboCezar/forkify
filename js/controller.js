@@ -24,12 +24,15 @@ const controlRecipes = async function () {
     recipeView.renderSpinner()
 
     ResultsView.update(model.resultsPerPage())
+
     BookmarksView.update(model.state.bookmarks);
+
     //Load recipe
     await model.loadRecipe(id);
 
     // Render recipe
     recipeView.render(model.state.recipe);
+
 
   } catch (error) {
     recipeView.renderError()
@@ -80,7 +83,12 @@ const controlAddBookmark = function () {
 
 }
 
+const controlBookmarks = function () {
+  BookmarksView.render(model.state.bookmarks);
+}
+
 const init = function () {
+  BookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandler(controlRecipes);
   recipeView.addHandlerUpdateServings(controlQuantity);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
@@ -89,3 +97,8 @@ const init = function () {
 }
 init();
 
+const clearBookmarks = function () {
+  localStorage.clear('bookmarks');
+}
+
+// clearBookmarks();
