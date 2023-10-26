@@ -88,8 +88,25 @@ const controlBookmarks = function () {
   BookmarksView.render(model.state.bookmarks);
 }
 
-const controlAddRecipe = function (newRecipe) {
-  // console.log(newRecipe);
+const controlAddRecipe = async function (newRecipe) {
+  try {
+    addRecipeView.renderSpinner();
+
+    await model.uploadRecipe(newRecipe);
+    // console.log(model.state.recipe);
+    recipeView.render(model.state.recipe);
+
+    addRecipeView.renderMessage('Recipe succesfully added!');
+
+    setTimeout(function () {
+      addRecipeView.toggleWindow()
+    }, 800);
+  } catch (err) {
+    console.error(err);
+    addRecipeView.renderError(err.message);
+  }
+
+
 }
 
 const init = function () {
