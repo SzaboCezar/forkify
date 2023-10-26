@@ -9,6 +9,7 @@ import BookmarksView from './view/bookmarksView.js';
 import PaginationView from "./view/pageView.js";
 import addRecipeView from './view/addRecipeView.js';
 import pageView from './view/pageView.js';
+import bookmarksView from './view/bookmarksView.js';
 // https://forkify-api.herokuapp.com/v2
 
 ///////////////////////////////////////
@@ -97,6 +98,13 @@ const controlAddRecipe = async function (newRecipe) {
     recipeView.render(model.state.recipe);
 
     addRecipeView.renderMessage('Recipe succesfully added!');
+
+    bookmarksView.render(model.state.bookmarks);
+
+    window.history.pushState(null, '', `#${model.state.recipe.id}`)
+
+
+
 
     setTimeout(function () {
       addRecipeView.toggleWindow()
