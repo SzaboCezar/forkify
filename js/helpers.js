@@ -9,7 +9,6 @@ const timeout = function (s) {
     });
 };
 
-
 export const AJAX = async function (url, uploadData = undefined) {
     try {
         const fetchPro = uploadData ? fetch(url, {
